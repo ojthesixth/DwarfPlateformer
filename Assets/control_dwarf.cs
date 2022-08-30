@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class control_dwarf : MonoBehaviour
-{   
+{
     private float controlDwarf;
     public float _speed = 10f;
     public GameObject Dwarf;
@@ -11,8 +11,8 @@ public class control_dwarf : MonoBehaviour
     public CapsuleCollider2D _collider2D;
     public Animator _animator;
     public float GravityScaleOnFall;
-    public Vector2 direction;
-    
+    public Vector3 direction;
+
     public float walkingSpeed;
     [Header("jump")]
     public bool isJumping = false;
@@ -23,17 +23,25 @@ public class control_dwarf : MonoBehaviour
 
     [Range(1, 10)]
     public float jumpVelocity;
+    public GameObject graphics;
+
+
+    void Awake() {
+
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _animator = graphics.GetComponent<Animator>();
+    }
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
 
         controlDwarf = Input.GetAxisRaw("Horizontal");
-        _rigidbody.velocity = new Vector2(controlDwarf * _speed, _rigidbody.velocity.y);
+        _rigidbody.velocity = new Vector3(controlDwarf * _speed, _rigidbody.velocity.y);
 
         //part of attempt1
         /* if (Input.GetButtonDown("Jump"))
@@ -45,9 +53,22 @@ public class control_dwarf : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            GetComponent<Rigidbody2D>().velocity = Vector2.up * jumpVelocity;
+            GetComponent<Rigidbody2D>().velocity = Vector3.up * jumpVelocity;
         }
-    }
+
+        if (direction.x < 0f)
+        {
+            graphics.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else
+        {
+            graphics.transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        _animator.SetFloat("MoveSpeedx", Mathf.Abs(direction.x));
+        _animator.SetFloat("MoveSpeedy", _rigidbody.velocity.y);
+
+    } 
 
 
     void fixedUpdate()
