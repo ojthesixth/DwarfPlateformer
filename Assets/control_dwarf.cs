@@ -76,7 +76,7 @@ public class control_dwarf : MonoBehaviour
 
           
         //attempt1 at jump
-        /* direction.y = _rigidbody.velocity.y;
+         direction.y = _rigidbody.velocity.y;
 
         if (isJumping)
         {
