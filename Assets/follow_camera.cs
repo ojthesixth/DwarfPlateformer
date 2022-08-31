@@ -10,6 +10,10 @@ public class follow_camera : MonoBehaviour
     public float xVelocity = 0.0f;
     public float yVelocity = 0.0f;
 
+    public Transform GameObject;
+
+ // UI.Text, doesnt work, GUIText obsolete, GameObject neither,, tried Transform but doesnt work either
+
 
     void Update()
     {
@@ -19,4 +23,10 @@ public class follow_camera : MonoBehaviour
         
         transform.position = new Vector3 (newX, newY, -10);
     }
+    
+    void FixedUpdate()
+    {
+        GameObject.position = new Vector3(10f / (float)Screen.width, 10f / (float)Screen.height, 0f);
+    }
+
 }
